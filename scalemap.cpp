@@ -65,7 +65,8 @@ void ScaleMap::setPixelLength(double length)
 {
     if (m_pixelLength != length && length >= 0.)
     {
-         m_pixelLength = length;
+        m_pixelLength = length;
+        update();
         emit pixelLengthChanged(length);
     }
 }
