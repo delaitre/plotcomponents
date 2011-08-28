@@ -108,11 +108,11 @@ Item {
 
             onPositionChanged: {
                 var xLin = horizontalScaleLin.scaleMap.mapToScale(mouse.x);
-                var yLin = verticalScaleLin.scaleMap.mapToScale(mouse.y);
+                var yLin = verticalScaleLin.scaleMap.mapToScale(verticalScaleLin.scaleMap.pixelLength - mouse.y);
                 pickerLin.text = "lin: (" + xLin + "; " + yLin + ")";
 
                 var xLog = horizontalScaleLog.scaleMap.mapToScale(mouse.x);
-                var yLog = verticalScaleLog.scaleMap.mapToScale(mouse.y);
+                var yLog = verticalScaleLog.scaleMap.mapToScale(verticalScaleLog.scaleMap.pixelLength - mouse.y);
                 pickerLog.text = "log: (" + xLog + "; " + yLog + ")";
             }
         }
