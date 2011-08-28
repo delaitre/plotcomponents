@@ -5,10 +5,19 @@ Item {
     width: 400
     height: 300
 
+    Column {
+        id: header
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        Text { id: pickerLin; color: "black"; text: "pickerLin" }
+        Text { id: pickerLog; color: "black"; text: "pickerLog" }
+    }
+
     Row {
         id: verticalScales
         spacing: 4
-        anchors.top: parent.top
+        anchors.top: header.bottom
         anchors.bottom: horizontalScales.top
         anchors.left: parent.left
 
@@ -92,44 +101,16 @@ Item {
             yScaleMap: verticalScaleLin.scaleMap
         }
 
-        Text {
-            id: pickerLin
-            color: "white"
-            text: "pickerLin"
-
-            Rectangle {
-                anchors.fill: parent
-                color: "black"
-                z: -1
-            }
-        }
-
-        Text {
-            id: pickerLog
-            color: "white"
-            text: "pickerLog"
-
-            Rectangle {
-                anchors.fill: parent
-                color: "black"
-                z: -1
-            }
-        }
-
         MouseArea {
             id: pickerArea
             anchors.fill: parent
             hoverEnabled: true
 
             onPositionChanged: {
-                pickerLin.x = mouse.x + 10;
-                pickerLin.y = mouse.y;
                 var xLin = horizontalScaleLin.scaleMap.mapToScale(mouse.x);
                 var yLin = verticalScaleLin.scaleMap.mapToScale(mouse.y);
                 pickerLin.text = "lin: (" + xLin + "; " + yLin + ")";
 
-                pickerLog.x = mouse.x + 10;
-                pickerLog.y = mouse.y + 15;
                 var xLog = horizontalScaleLog.scaleMap.mapToScale(mouse.x);
                 var yLog = verticalScaleLog.scaleMap.mapToScale(mouse.y);
                 pickerLog.text = "log: (" + xLog + "; " + yLog + ")";
