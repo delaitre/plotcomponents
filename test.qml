@@ -32,6 +32,15 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             width: 20
+
+            delegate: Rectangle {
+                x: -width
+                y: tickPosition - height / 2
+                width: 8
+                height: 2
+                color: "black"
+                Text { anchors.right: parent.left; anchors.verticalCenter: parent.verticalCenter; text: tickValue }
+            }
         }
 
         LinearScale {
@@ -45,6 +54,15 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             width: 20
+
+            delegate: Rectangle {
+                x: -width
+                y: tickPosition - height / 2
+                width: 8
+                height: 2
+                color: "black"
+                Text { anchors.right: parent.left; anchors.verticalCenter: parent.verticalCenter; text: tickValue }
+            }
         }
     }
 
@@ -66,6 +84,15 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: 20
+
+            delegate: Rectangle {
+                x: tickPosition - width / 2
+                y: 0
+                width: 2
+                height: 8
+                color: "black"
+                Text { anchors.top: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter; text: tickValue }
+            }
         }
 
         LinearScale {
@@ -79,6 +106,15 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: 20
+
+            delegate: Rectangle {
+                x: tickPosition - width / 2
+                y: 0
+                width: 2
+                height: 8
+                color: "black"
+                Text { anchors.top: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter; text: tickValue }
+            }
         }
     }
 

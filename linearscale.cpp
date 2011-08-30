@@ -1,13 +1,14 @@
 #include "linearscale.hpp"
-#include "linearscalenode.hpp"
 #include "scalemap.hpp"
+#include <QtDeclarative/QDeclarativeContext>
 
 LinearScale::LinearScale(QSGItem* parent)
     : QSGItem(parent)
     , m_scaleMap(0)
     , m_orientation(Qt::Horizontal)
+    , m_delegate(0)
 {
-    setFlag(ItemHasContents);
+
 }
 
 ScaleMap* LinearScale::scaleMap() const
@@ -38,10 +39,27 @@ void LinearScale::setOrientation(Qt::Orientation orientation)
     }
 }
 
+QDeclarativeComponent* LinearScale::delegate() const
+{
+    return m_delegate;
+}
+
+void LinearScale::setDelegate(QDeclarativeComponent *delegate)
+{
+    if (m_delegate != delegate)
+    {
+        m_delegate = delegate;
+        emit delegateChanged(delegate);
+    }
+}
+
 void LinearScale::geometryChanged(const QRectF &newGeometry,
                                   const QRectF &oldGeometry)
 {
     Q_UNUSED(oldGeometry);
+
+    qDeleteAll(m_ticks);
+    m_ticks.clear();
 
     if (!m_scaleMap)
         return;
@@ -50,23 +68,35 @@ void LinearScale::geometryChanged(const QRectF &newGeometry,
         m_scaleMap->setPixelLength(newGeometry.width());
     else
         m_scaleMap->setPixelLength(newGeometry.height());
-}
 
-QSGNode* LinearScale::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data)
-{
-    Q_UNUSED(data);
+    if (!m_delegate)
+        return;
 
-    if (width() <= 0 || height() <= 0)
+    QList<double> ticks;
+    ticks << 1 << 10 << 100 << 1000 << 10000;
+
+    foreach (double tick, ticks)
     {
-        delete oldNode;
-        return 0;
+        double pixelTick = m_scaleMap->mapToPixel(tick);
+        if (m_orientation == Qt::Vertical)
+            pixelTick = height() - pixelTick;
+
+        QDeclarativeContext* context = new QDeclarativeContext(qmlContext(this));
+        context->setContextProperty("tickValue", tick);
+        context->setContextProperty("tickPosition", pixelTick);
+        QObject* o = m_delegate->create(context);
+        context->setParent(o);
+
+        QSGItem* item = qobject_cast<QSGItem*>(o);
+        if (item)
+        {
+            item->setParent(this);
+            item->setParentItem(this);
+            m_ticks << item;
+        }
+        else
+        {
+            delete o;
+        }
     }
-
-    LinearScaleNode* scaleNode = static_cast<LinearScaleNode*>(oldNode);
-    if (!scaleNode)
-        scaleNode = new LinearScaleNode;
-
-    scaleNode->updateFromLinearScale(this);
-
-    return scaleNode;
 }

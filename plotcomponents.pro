@@ -12,7 +12,6 @@ HEADERS += \
     logvaluemapper.hpp \
     scalemap.hpp \
     linearscale.hpp \
-    linearscalenode.hpp \
     curve.hpp \
     curvenode.hpp
 
@@ -22,7 +21,6 @@ SOURCES += \
     logvaluemapper.cpp \
     scalemap.cpp \
     linearscale.cpp \
-    linearscalenode.cpp \
     curve.cpp \
     curvenode.cpp
 
