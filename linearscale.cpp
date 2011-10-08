@@ -8,7 +8,9 @@ LinearScale::LinearScale(QSGItem* parent)
     , m_orientation(Qt::Horizontal)
     , m_delegate(0)
 {
-
+    m_timer.setSingleShot(true);
+    m_timer.setInterval(100);
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateTicks()));
 }
 
 ScaleMap* LinearScale::scaleMap() const
@@ -56,20 +58,25 @@ void LinearScale::setDelegate(QDeclarativeComponent *delegate)
 void LinearScale::geometryChanged(const QRectF &newGeometry,
                                   const QRectF &oldGeometry)
 {
-    Q_UNUSED(oldGeometry);
+    QSGItem::geometryChanged(newGeometry, oldGeometry);
 
+    if (m_scaleMap)
+    {
+        if (m_orientation == Qt::Horizontal)
+            m_scaleMap->setPixelLength(newGeometry.width());
+        else
+            m_scaleMap->setPixelLength(newGeometry.height());
+    }
+
+    if (!m_timer.isActive())
+        m_timer.start();
+}
+
+void LinearScale::updateTicks()
+{
     qDeleteAll(m_ticks);
     m_ticks.clear();
-
-    if (!m_scaleMap)
-        return;
-
-    if (m_orientation == Qt::Horizontal)
-        m_scaleMap->setPixelLength(newGeometry.width());
-    else
-        m_scaleMap->setPixelLength(newGeometry.height());
-
-    if (!m_delegate)
+    if (!m_delegate || !m_scaleMap)
         return;
 
     QList<double> ticks;
@@ -99,4 +106,6 @@ void LinearScale::geometryChanged(const QRectF &newGeometry,
             delete o;
         }
     }
+
+    update();
 }

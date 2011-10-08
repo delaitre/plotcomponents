@@ -5,151 +5,96 @@ Item {
     width: 400
     height: 300
 
-    Column {
-        id: header
+    Rectangle {
+        id: r1
+        x: 30
+        y: 30
         anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        Text { id: pickerLin; color: "black"; text: "pickerLin" }
-        Text { id: pickerLog; color: "black"; text: "pickerLog" }
-    }
-
-    Row {
-        id: verticalScales
-        spacing: 4
-        anchors.top: header.bottom
-        anchors.bottom: horizontalScales.top
-        anchors.left: parent.left
-
-        LinearScale {
-            id: verticalScaleLog
-            orientation: Qt.Vertical
-            scaleMap: ScaleMap {
-                valueMapper: LogValueMapper {}
-                scaleMinimum: 1
-                scaleMaximum: 10100
-            }
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: 20
-
-            delegate: Rectangle {
-                x: -width
-                y: tickPosition - height / 2
-                width: 8
-                height: 2
-                color: "black"
-                Text { anchors.right: parent.left; anchors.verticalCenter: parent.verticalCenter; text: tickValue }
-            }
-        }
-
-        LinearScale {
-            id: verticalScaleLin
-            orientation: Qt.Vertical
-            scaleMap: ScaleMap {
-                valueMapper: ValueMapper {}
-                scaleMinimum: 1
-                scaleMaximum: 10100
-            }
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: 20
-
-            delegate: Rectangle {
-                x: -width
-                y: tickPosition - height / 2
-                width: 8
-                height: 2
-                color: "black"
-                Text { anchors.right: parent.left; anchors.verticalCenter: parent.verticalCenter; text: tickValue }
-            }
-        }
-    }
-
-    Column {
-        id: horizontalScales
-        spacing: 4
-        anchors.left: verticalScales.right
-        anchors.right: parent.right
+        anchors.topMargin: 40
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 40
+        width: childrenRect.width
+        color: "#B0347853"
 
-        LinearScale {
-            id: horizontalScaleLog
-            orientation: Qt.Horizontal
-            scaleMap: ScaleMap {
-                valueMapper: LogValueMapper {}
-                scaleMinimum: 1
-                scaleMaximum: 10100
-            }
+        Row {
+            spacing: 4
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             anchors.left: parent.left
-            anchors.right: parent.right
-            height: 20
 
-            delegate: Rectangle {
-                x: tickPosition - width / 2
-                y: 0
-                width: 2
-                height: 8
-                color: "black"
-                Text { anchors.top: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter; text: tickValue }
+            Scale {
+                label.text: "log scale"
+                baselineColor: "yellow"
+                baselineThickness: 4
+                scaleMap.valueMapper: LogValueMapper {}
+                scaleMap.scaleMinimum: 0
+                scaleMap.scaleMaximum: 10100
             }
-        }
 
-        LinearScale {
-            id: horizontalScaleLin
-            orientation: Qt.Horizontal
-            scaleMap: ScaleMap {
-                valueMapper: ValueMapper {}
-                scaleMinimum: 1
-                scaleMaximum: 10100
+            Scale {
+                label.text: "linear scale flipped"
+                baselineColor: "yellow"
+                baselineThickness: 10
+                scaleMap.valueMapper: ValueMapper {}
+                scaleMap.scaleMinimum: -200
+                scaleMap.scaleMaximum: 10100
+                flip: true
             }
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 20
 
-            delegate: Rectangle {
-                x: tickPosition - width / 2
-                y: 0
-                width: 2
-                height: 8
-                color: "black"
-                Text { anchors.top: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter; text: tickValue }
+            Scale {
+                label.text: "linear scale"
+                baselineColor: "yellow"
+                baselineThickness: 2
+                scaleMap.valueMapper: ValueMapper {}
+                scaleMap.scaleMinimum: -200
+                scaleMap.scaleMaximum: 10100
             }
         }
     }
+    Rectangle {
+        anchors.top: r1.top
+        anchors.left: r1.right
+        anchors.right: parent.right
+        height: childrenRect.height
+        anchors.leftMargin: 40
+        anchors.rightMargin: 40
+        color: "#B0347853"
 
-    Item {
-        id: plottingArea
-        anchors.left: horizontalScales.left
-        anchors.right: horizontalScales.right
-        anchors.top: verticalScales.top
-        anchors.bottom: verticalScales.bottom
+        Column {
+            spacing: 4
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
 
-        Curve {
-            anchors.fill: parent
-            xScaleMap: horizontalScaleLin.scaleMap
-            yScaleMap: verticalScaleLog.scaleMap
-        }
+            Scale {
+                label.text: "log scale"
+                baselineColor: "yellow"
+                baselineThickness: 4
+                scaleMap.valueMapper: LogValueMapper {}
+                scaleMap.scaleMinimum: 0
+                scaleMap.scaleMaximum: 10100
+                orientation: "horizontal"
+            }
 
-        Curve {
-            anchors.fill: parent
-            xScaleMap: horizontalScaleLin.scaleMap
-            yScaleMap: verticalScaleLin.scaleMap
-        }
+            Scale {
+                label.text: "linear scale flipped"
+                baselineColor: "yellow"
+                baselineThickness: 10
+                scaleMap.valueMapper: ValueMapper {}
+                scaleMap.scaleMinimum: -200
+                scaleMap.scaleMaximum: 10100
+                flip: true
+                orientation: "horizontal"
+            }
 
-        MouseArea {
-            id: pickerArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onPositionChanged: {
-                var xLin = horizontalScaleLin.scaleMap.mapToScale(mouse.x);
-                var yLin = verticalScaleLin.scaleMap.mapToScale(verticalScaleLin.scaleMap.pixelLength - mouse.y);
-                pickerLin.text = "lin: (" + xLin + "; " + yLin + ")";
-
-                var xLog = horizontalScaleLog.scaleMap.mapToScale(mouse.x);
-                var yLog = verticalScaleLog.scaleMap.mapToScale(verticalScaleLog.scaleMap.pixelLength - mouse.y);
-                pickerLog.text = "log: (" + xLog + "; " + yLog + ")";
+            Scale {
+                label.text: "linear scale"
+                baselineColor: "yellow"
+                baselineThickness: 2
+                scaleMap.valueMapper: ValueMapper {}
+                scaleMap.scaleMinimum: -200
+                scaleMap.scaleMaximum: 10100
+                orientation: "horizontal"
             }
         }
     }

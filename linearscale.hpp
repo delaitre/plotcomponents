@@ -3,6 +3,7 @@
 
 #include <QtDeclarative/QSGItem>
 #include <QtCore/QPointer>
+#include <QtCore/QTimer>
 
 class ScaleMap;
 class QDeclarativeComponent;
@@ -41,12 +42,17 @@ protected:
     virtual void geometryChanged(const QRectF &newGeometry,
                                  const QRectF &oldGeometry);
 
+private slots:
+
+    void updateTicks();
+
 private:
 
     QPointer<ScaleMap> m_scaleMap;
     Qt::Orientation m_orientation;
     QPointer<QDeclarativeComponent> m_delegate;
     QList<QSGItem*> m_ticks;
+    QTimer m_timer;
 };
 
 QML_DECLARE_TYPE(LinearScale)
