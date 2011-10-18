@@ -1,12 +1,10 @@
 import QtQuick 2.0
 import "." 1.0
 
-Rectangle {
+Item {
     id: scaleContainer
     width: orientation == "vertical" ? childrenRect.width : 0
     height: orientation == "horizontal" ? childrenRect.height : 0
-
-    color: "#B0444444"
 
     property alias label: label
     property alias scaleMap: scaleMap

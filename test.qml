@@ -12,8 +12,7 @@ Item {
         anchors.left: scaleLeft.right
         anchors.right: scaleRight.left
         label.text: "log scale"
-        baselineColor: "yellow"
-        baselineThickness: 4
+        baselineThickness: 3
         scaleMap.valueMapper: LogValueMapper {}
         scaleMap.scaleMinimum: 0
         scaleMap.scaleMaximum: 10100
@@ -27,8 +26,7 @@ Item {
         anchors.left: scaleLeft.right
         anchors.right: scaleRight.left
         label.text: "linear scale flipped"
-        baselineColor: "yellow"
-        baselineThickness: 10
+        baselineThickness: 3
         scaleMap.valueMapper: ValueMapper {}
         scaleMap.scaleMinimum: -200
         scaleMap.scaleMaximum: 10100
@@ -41,8 +39,7 @@ Item {
         anchors.top: scaleTop.bottom
         anchors.bottom: scaleBottom.top
         label.text: "log scale"
-        baselineColor: "yellow"
-        baselineThickness: 4
+        baselineThickness: 3
         scaleMap.valueMapper: ValueMapper {}
         scaleMap.scaleMinimum: -200
         scaleMap.scaleMaximum: 10100
@@ -54,8 +51,7 @@ Item {
         anchors.top: scaleTop.bottom
         anchors.bottom: scaleBottom.top
         label.text: "linear scale flipped"
-        baselineColor: "yellow"
-        baselineThickness: 10
+        baselineThickness: 3
         scaleMap.valueMapper: LogValueMapper {}
         scaleMap.scaleMinimum: 0
         scaleMap.scaleMaximum: 10100

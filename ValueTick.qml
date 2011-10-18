@@ -1,6 +1,6 @@
 import QtQuick 2.0
 
-Rectangle {
+Item {
     anchors.right: (parent && !flip && orientation == "vertical") ? parent.right : undefined
     anchors.left: (parent && flip && orientation == "vertical") ? parent.left : undefined
     anchors.top:  (parent && !flip && orientation == "horizontal") ? parent.top : undefined
@@ -13,7 +13,6 @@ Rectangle {
 
     property bool flip: false
     property string orientation: "vertical"
-    color: "#B0FF0000"
 
     Rectangle {
         id: tick
