@@ -29,6 +29,7 @@ Curve::Curve(QSGItem *parent)
     , m_yScaleMap(0)
 {
     setFlag(ItemHasContents);
+    setClip(true); // enable clipping by default
 }
 
 ScaleMap* Curve::xScaleMap() const
