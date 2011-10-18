@@ -5,10 +5,6 @@ Rectangle {
     id: scaleContainer
     width: orientation == "vertical" ? childrenRect.width : 0
     height: orientation == "horizontal" ? childrenRect.height : 0
-    anchors.top: orientation == "vertical" ? parent.top : undefined
-    anchors.bottom: orientation == "vertical" ? parent.bottom : undefined
-    anchors.left: orientation == "horizontal" ? parent.left : undefined
-    anchors.right: orientation == "horizontal" ? parent.right : undefined
 
     color: "#B0444444"
 
