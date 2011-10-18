@@ -8,7 +8,7 @@ Item {
 
     property alias label: label
     property alias scaleMap: scaleMap
-    property alias baselineThickness: baseline.width
+    property int baselineThickness: 2
     property alias baselineColor: baseline.color
     property alias tickDelegate: scale.delegate
     property bool flip: false
@@ -20,8 +20,8 @@ Item {
         anchors.bottom: orientation == "vertical" ? scale.bottom : (flip ? scale.bottom : undefined)
         anchors.left: orientation == "horizontal" ? scale.left : (flip ? scale.left : undefined)
         anchors.right: orientation == "horizontal" ? scale.right : (!flip ? scale.right : undefined)
-        width: orientation == "vertical" ? 2 : 0
-        height: orientation == "horizontal" ? 2 : 0
+        width: orientation == "vertical" ? baselineThickness : 0
+        height: orientation == "horizontal" ? baselineThickness : 0
         color: "black"
     }
 
