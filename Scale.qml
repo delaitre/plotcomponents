@@ -37,9 +37,9 @@ Item {
 
         scaleMap: ScaleMap {
             id: scaleMap
-            valueMapper: LogValueMapper {}
-            scaleMinimum: 1
-            scaleMaximum: 10100
+            valueMapper: ValueMapper {}
+            scaleMinimum: 0
+            scaleMaximum: 1000
         }
 
         delegate: ValueTick { flip: scaleContainer.flip; orientation: scaleContainer.orientation }
