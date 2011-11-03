@@ -27,7 +27,8 @@ SOURCES += \
 OTHER_FILES = qmldir \
     test.qml \
     ValueTick.qml \
-    Scale.qml
+    Scale.qml \
+    Plot.qml
 
 !equals(_PRO_FILE_PWD_, $$OUT_PWD) {
     copy_qmldir.target = $$OUT_PWD/qmldir

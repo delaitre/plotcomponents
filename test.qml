@@ -1,16 +1,16 @@
 import QtQuick 2.0
 import "." 1.0
 
-Item {
+Plot {
     id: plot
     width: 400
     height: 300
 
     Scale {
         id: scaleTop
-        anchors.top: plot.top
-        anchors.left: scaleLeft.right
-        anchors.right: scaleRight.left
+        parent: plot.topScales
+        anchors.left: plot.topScales.left
+        anchors.right: plot.topScales.right
         label.text: "log scale"
         baselineThickness: 3
         scaleMap.valueMapper: LogValueMapper {}
@@ -22,9 +22,9 @@ Item {
 
     Scale {
         id: scaleBottom
-        anchors.bottom: plot.bottom
-        anchors.left: scaleLeft.right
-        anchors.right: scaleRight.left
+        parent: plot.bottomScales
+        anchors.left: plot.bottomScales.left
+        anchors.right: plot.bottomScales.right
         label.text: "linear scale flipped"
         baselineThickness: 3
         scaleMap.valueMapper: ValueMapper {}
@@ -35,10 +35,10 @@ Item {
 
     Scale {
         id: scaleLeft
-        anchors.left: plot.left
-        anchors.top: scaleTop.bottom
-        anchors.bottom: scaleBottom.top
-        label.text: "log scale"
+        parent: plot.leftScales
+        anchors.top: plot.leftScales.top
+        anchors.bottom: plot.leftScales.bottom
+        label.text: "linear scale"
         baselineThickness: 3
         scaleMap.valueMapper: ValueMapper {}
         scaleMap.scaleMinimum: -200
@@ -47,10 +47,10 @@ Item {
 
     Scale {
         id: scaleRight
-        anchors.right: plot.right
-        anchors.top: scaleTop.bottom
-        anchors.bottom: scaleBottom.top
-        label.text: "linear scale flipped"
+        parent: plot.rightScales
+        anchors.top: plot.rightScales.top
+        anchors.bottom: plot.rightScales.bottom
+        label.text: "log scale flipped"
         baselineThickness: 3
         scaleMap.valueMapper: LogValueMapper {}
         scaleMap.scaleMinimum: 0
@@ -59,19 +59,15 @@ Item {
     }
 
     Curve {
-        anchors.left: scaleBottom.left
-        anchors.right: scaleBottom.right
-        anchors.top: scaleRight.top
-        anchors.bottom: scaleRight.bottom
+        parent: plot.plottingArea
+        anchors.fill: plot.plottingArea
         xScaleMap: scaleBottom.scaleMap
         yScaleMap: scaleRight.scaleMap
     }
 
     Curve {
-        anchors.left: scaleTop.left
-        anchors.right: scaleTop.right
-        anchors.top: scaleLeft.top
-        anchors.bottom: scaleLeft.bottom
+        parent: plot.plottingArea
+        anchors.fill: plot.plottingArea
         xScaleMap: scaleTop.scaleMap
         yScaleMap: scaleLeft.scaleMap
     }
