@@ -1,14 +1,14 @@
 #ifndef LINEARSCALEITEM_HPP
 #define LINEARSCALEITEM_HPP
 
-#include <QtDeclarative/QSGItem>
+#include <QtQuick/QQuickItem>
 #include <QtCore/QPointer>
 #include <QtCore/QTimer>
 
 class ScaleMap;
 class QDeclarativeComponent;
 
-class LinearScale : public QSGItem
+class LinearScale : public QQuickItem
 {
     Q_OBJECT
     Q_DISABLE_COPY(LinearScale)
@@ -19,7 +19,7 @@ class LinearScale : public QSGItem
 
 public:
 
-    explicit LinearScale(QSGItem* parent = 0);
+    explicit LinearScale(QQuickItem* parent = 0);
 
     ScaleMap* scaleMap() const;
     Qt::Orientation orientation() const;
@@ -51,7 +51,7 @@ private:
     QPointer<ScaleMap> m_scaleMap;
     Qt::Orientation m_orientation;
     QPointer<QDeclarativeComponent> m_delegate;
-    QList<QSGItem*> m_ticks;
+    QList<QQuickItem*> m_ticks;
     QTimer m_timer;
 };
 

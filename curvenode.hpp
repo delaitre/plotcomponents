@@ -1,11 +1,12 @@
 #ifndef CURVENODE_HPP
 #define CURVENODE_HPP
 
-#include <QtDeclarative/QSGGeometryNode>
-#include <QtDeclarative/QSGGeometry>
-#include <QtDeclarative/QSGFlatColorMaterial>
+#include <QtQuick/QSGGeometryNode>
+#include <QtQuick/QSGGeometry>
+#include <QtQuick/QSGFlatColorMaterial>
 
 class Curve;
+class QPainterPath;
 
 class CurveNode : public QSGGeometryNode
 {
@@ -17,7 +18,7 @@ public:
     QColor color() const;
     void setColor(const QColor &color);
 
-    void updateFromCurve(Curve* curve);
+    void updateFromCurve(Curve* curve, const QPainterPath& path);
 
 private:
 

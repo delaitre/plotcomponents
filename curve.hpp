@@ -1,12 +1,13 @@
 #ifndef CURVE_HPP
 #define CURVE_HPP
 
-#include <QtDeclarative/QSGItem>
+#include <QtQuick/QQuickItem>
+#include <QtGui/QPainterPath>
 #include <QtCore/QPointer>
 
 class ScaleMap;
 
-class Curve : public QSGItem
+class Curve : public QQuickItem
 {
     Q_OBJECT
     Q_DISABLE_COPY(Curve)
@@ -16,12 +17,10 @@ class Curve : public QSGItem
 
 public:
 
-    explicit Curve(QSGItem *parent = 0);
+    explicit Curve(QQuickItem *parent = 0);
 
     ScaleMap* xScaleMap() const;
     ScaleMap* yScaleMap() const;
-
-    const QVector<double>& data() const;
 
 public slots:
 
@@ -44,7 +43,7 @@ private:
 
     QPointer<ScaleMap> m_xScaleMap;
     QPointer<ScaleMap> m_yScaleMap;
-    QVector<double> m_data;
+    QPainterPath m_curve;
 };
 
 QML_DECLARE_TYPE(Curve)

@@ -24,7 +24,7 @@ void CurveNode::setColor(const QColor &color)
     }
 }
 
-void CurveNode::updateFromCurve(Curve* curve)
+void CurveNode::updateFromCurve(Curve* curve, const QPainterPath& path)
 {
     ScaleMap* xScaleMap = curve->xScaleMap();
     ScaleMap* yScaleMap = curve->yScaleMap();
@@ -36,15 +36,15 @@ void CurveNode::updateFromCurve(Curve* curve)
     }
 
     double height = curve->height();
-    const QVector<double>& data = curve->data();
 
-    m_geometry.allocate(data.size() / 2);
+    m_geometry.allocate(path.elementCount());
     QSGGeometry::Point2D* vertex = m_geometry.vertexDataAsPoint2D();
 
     for (int i = 0; i < m_geometry.vertexCount(); ++i)
     {
-        vertex[i].x = xScaleMap->mapToPixel(data[i * 2]);
-        vertex[i].y = height - yScaleMap->mapToPixel(data[i * 2 + 1]); // y = 0 is at the top, so we subtract from the height
+        const QPainterPath::Element& element = path.elementAt(i);
+        vertex[i].x = xScaleMap->mapToPixel(element.x);
+        vertex[i].y = height - yScaleMap->mapToPixel(element.y); // y = 0 is at the top, so we subtract from the height
     }
 
     markDirty(QSGNode::DirtyGeometry);

@@ -1,7 +1,7 @@
 TEMPLATE = lib
 TARGET = plotcomponentsplugin
 CONFIG += qt plugin
-QT += declarative
+QT += declarative quick
 
 TARGET = $$qtLibraryTarget($$TARGET)
 uri = delaitre.jeremie.plotcomponents

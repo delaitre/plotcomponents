@@ -2,8 +2,8 @@
 #include "scalemap.hpp"
 #include <QtDeclarative/QDeclarativeContext>
 
-LinearScale::LinearScale(QSGItem* parent)
-    : QSGItem(parent)
+LinearScale::LinearScale(QQuickItem* parent)
+    : QQuickItem(parent)
     , m_scaleMap(0)
     , m_orientation(Qt::Horizontal)
     , m_delegate(0)
@@ -58,7 +58,7 @@ void LinearScale::setDelegate(QDeclarativeComponent *delegate)
 void LinearScale::geometryChanged(const QRectF &newGeometry,
                                   const QRectF &oldGeometry)
 {
-    QSGItem::geometryChanged(newGeometry, oldGeometry);
+    QQuickItem::geometryChanged(newGeometry, oldGeometry);
 
     if (m_scaleMap)
     {
@@ -94,7 +94,7 @@ void LinearScale::updateTicks()
         QObject* o = m_delegate->create(context);
         context->setParent(o);
 
-        QSGItem* item = qobject_cast<QSGItem*>(o);
+        QQuickItem* item = qobject_cast<QQuickItem*>(o);
         if (item)
         {
             item->setParent(this);

@@ -6,25 +6,23 @@
 namespace
 {
 
-QVector<double> buildCurve(int pointCount)
+QPainterPath buildCurve(int pointCount)
 {
-    QVector<double> data;
-    data.reserve(pointCount * 2);
+    QPainterPath path;
     double sinStep = 4 * (2 * 3.1415) / pointCount;
     for (int i = 0; i < pointCount; ++i)
     {
-        data << i * (10000. / pointCount);
-        data << i * (10000. / pointCount);
-        //data << sin(i * sinStep);
+        path.lineTo(i * (10000. / pointCount), i * (10000. / pointCount));
+        //path.lineTo(i, sin(i * sinStep));
     }
 
-    return data;
+    return path;
 }
 
 } // anonymous namespace
 
-Curve::Curve(QSGItem *parent)
-    : QSGItem(parent)
+Curve::Curve(QQuickItem *parent)
+    : QQuickItem(parent)
     , m_xScaleMap(0)
     , m_yScaleMap(0)
 {
@@ -60,11 +58,6 @@ void Curve::setYScaleMap(ScaleMap* scaleMap)
     }
 }
 
-const QVector<double>& Curve::data() const
-{
-    return m_data;
-}
-
 void Curve::geometryChanged(const QRectF &newGeometry,
                             const QRectF &oldGeometry)
 {
@@ -90,8 +83,8 @@ QSGNode* Curve::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data)
     if (!curveNode)
         curveNode = new CurveNode;
 
-    m_data = buildCurve(4000);
-    curveNode->updateFromCurve(this);
+    m_curve = buildCurve(4000);
+    curveNode->updateFromCurve(this, m_curve);
 
     return curveNode;
 }
